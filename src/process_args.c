@@ -21,13 +21,9 @@
 #include <unistd.h>
 #include "histogram.h"
 
-void Process_args
-(
-    int *argc,
-    char **argv[],
-    struct arguments *args,
-    int my_rank
-)
+
+void
+Process_args (int *argc, char **argv[], struct arguments *args, int my_rank)
 {
   // set defaults
   args->bin_count = 5;
@@ -36,37 +32,42 @@ void Process_args
   int c;
   opterr = 0;
 
-  while((c = getopt (*argc, *argv, "b:c:h")) != -1)
-  {
-    switch(c)
+  while ((c = getopt (*argc, *argv, "b:c:h")) != -1)
     {
-      case 'b':
-        if(optarg) args->bin_count = atoi(optarg);
-	break;
-      case 'c':
-        if(optarg) args->data_count = atoi(optarg);
-	break;
-      case 'h':
-	if(my_rank == 0) usage();
-	MPI_Finalize();
-	exit(0);
-      case '?':
-        if(my_rank == 0)
-	{
-          if(optopt == 'b' || optopt == 'c')
-	    fprintf(stderr, "Option -%c requires an integer argument.\n", optopt);
-	  else if(isprint(optopt))
-	    fprintf(stderr, "Unknown option -%c.\n", optopt);
-	  else
-	    fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
-	  usage();
-	}
-	MPI_Finalize();
-        exit(IMPROPER_USAGE);
-      default:
-        abort();
+      switch (c)
+        {
+        case 'b':
+          if (optarg)
+            args->bin_count = atoi (optarg);
+          break;
+        case 'c':
+          if (optarg)
+            args->data_count = atoi (optarg);
+          break;
+        case 'h':
+          if (my_rank == 0)
+            usage ();
+          MPI_Finalize ();
+          exit (0);
+        case '?':
+          if (my_rank == 0)
+            {
+              if (optopt == 'b' || optopt == 'c')
+                fprintf (stderr, "Option -%c requires an integer argument.\n",
+                         optopt);
+              else if (isprint (optopt))
+                fprintf (stderr, "Unknown option -%c.\n", optopt);
+              else
+                fprintf (stderr, "Unknown option character `\\x%x'.\n",
+                         optopt);
+              usage ();
+            }
+          MPI_Finalize ();
+          exit (IMPROPER_USAGE);
+        default:
+          abort ();
+        }
     }
-  }
 }
 
 

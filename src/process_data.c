@@ -15,23 +15,19 @@
  **********************************************************************/
 #include "histogram.h"
 
-void Process_data
-(
-  double local_data[],
-  int local_data_count,
-  double bin_maxes[],
-  int bin_qty[],
-  int bin_count
-)
+
+void
+Process_data (double local_data[], int local_data_count, double bin_maxes[],
+              int bin_qty[], int bin_count)
 {
   int local_i;
   int bin;
 
-  for(local_i = 0; local_i < local_data_count; local_i++)
-  {
-    bin = Find_bin(local_data[local_i], bin_maxes, bin_count);
-    ++bin_qty[bin];
-  }
+  for (local_i = 0; local_i < local_data_count; local_i++)
+    {
+      bin = Find_bin (local_data[local_i], bin_maxes, bin_count);
+      ++bin_qty[bin];
+    }
 }
 
 

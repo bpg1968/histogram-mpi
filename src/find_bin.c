@@ -10,14 +10,17 @@
  *   the bin number in which the target belongs
  **********************************************************************/
 
-int Find_bin(double target, double bin_maxes[], int bin_count)
+
+int
+Find_bin (double target, double bin_maxes[], int bin_count)
 {
   int i;
 
-  for(i = 0; i < bin_count; i++)
-  {
-    if(target < bin_maxes[i]) return i;
-  }
+  for (i = 0; i < bin_count; i++)
+    {
+      if (target < bin_maxes[i])
+        return i;
+    }
   return -1;
 }
 

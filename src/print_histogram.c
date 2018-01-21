@@ -23,29 +23,25 @@
 #include "histogram.h"
 
 
-void Print_histogram
-(
-    double min,
-    double maxes[],
-    int local_bin_qty[],
-    int bin_count,
-    int my_rank,
-    MPI_Comm comm
-)
+void
+Print_histogram (double min, double maxes[], int local_bin_qty[],
+                 int bin_count, int my_rank, MPI_Comm comm)
 {
   int *bin_qty = NULL;
   // int i;
 
-  if(my_rank == 0)
-  {
-    bin_qty = malloc(bin_count*sizeof(double));
-    MPI_Reduce(local_bin_qty, bin_qty, bin_count, MPI_INT, MPI_SUM, 0, comm);
-    Display_histogram(min, maxes, bin_qty, bin_count);
-  }
+  if (my_rank == 0)
+    {
+      bin_qty = malloc (bin_count * sizeof (double));
+      MPI_Reduce (local_bin_qty, bin_qty, bin_count, MPI_INT, MPI_SUM, 0,
+                  comm);
+      Display_histogram (min, maxes, bin_qty, bin_count);
+    }
   else
-  {
-    MPI_Reduce(local_bin_qty, bin_qty, bin_count, MPI_INT, MPI_SUM, 0, comm);
-  }
+    {
+      MPI_Reduce (local_bin_qty, bin_qty, bin_count, MPI_INT, MPI_SUM, 0,
+                  comm);
+    }
 }
 
 
